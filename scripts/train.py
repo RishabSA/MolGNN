@@ -26,7 +26,8 @@ def train_model(
             batch = batch.to(device)
             optimizer.zero_grad()
 
-            preds = model(batch.x.float(), batch.edge_index, batch.batch)
+            edge_attr = batch.edge_attr.float() if batch.edge_attr is not None else None
+            preds = model(batch.x.float(), batch.edge_index, batch.batch, edge_attr)
             loss = loss_fn(preds, batch.y)
             train_loss += loss.item()
 
@@ -43,7 +44,8 @@ def train_model(
             for batch in test_dataloader:
                 batch = batch.to(device)
                 with torch.inference_mode():
-                    preds = model(batch.x.float(), batch.edge_index, batch.batch)
+                    edge_attr = batch.edge_attr.float() if batch.edge_attr is not None else None
+                    preds = model(batch.x.float(), batch.edge_index, batch.batch, edge_attr)
 
                 loss = loss_fn(preds, batch.y)
                 test_loss += loss.item()

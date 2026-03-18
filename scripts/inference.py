@@ -25,7 +25,8 @@ def predict_log_solubility_from_smiles(
     batch = torch.zeros(data.num_nodes, dtype=torch.long, device=device)
 
     with torch.inference_mode():
-        log_sol = model(data.x.float(), data.edge_index, batch)
+        edge_attr = data.edge_attr.float() if data.edge_attr is not None else None
+        log_sol = model(data.x.float(), data.edge_index, batch, edge_attr)
 
     print(f"Predicted Log Solubility: {log_sol.item():.4f} mol/L")
 
