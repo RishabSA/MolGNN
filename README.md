@@ -31,7 +31,7 @@ Evaluated on an 80/20 train/test split of ESOL (1128 molecules). All models trai
 ```bash
 git clone https://github.com/RishabSA/MolGNN.git
 cd MolGNN
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Usage
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 Run the interactive web app built with streamlit to predict log solubility from any SMILES string:
 
 ```bash
-streamlit run app.py
+uv run streamlit run app.py
 ```
 
 The app loads the pre-trained GCN model, renders molecules in real time using RDKit, and displays the predicted log solubility on button click.
